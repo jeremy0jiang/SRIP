@@ -1,5 +1,0 @@
-FLASK_CONFIG="development"
-THE_SECRET_KEY="RANDOM"
-DB_USER="chat_admin"
-DB_PASS="chat_password"
-DB_NAME="chat_app"
