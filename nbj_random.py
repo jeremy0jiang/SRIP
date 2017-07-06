@@ -9,11 +9,13 @@ sys.setrecursionlimit(10000)
 def nbj(cur):
     if (len(tree.leaf_nodes()) != 1000):
         print len(tree.leaf_nodes())
+	output.write(len(tree.leaf_nodes()))
         sys.exit()
     if (cur.label==True):
         return
     print "nbj:"
     print "current:", cur
+    print "tree seed node:",tree.seed_node
     if cur.is_leaf():
         cur.label = True
         print "cur is leaf"
@@ -26,8 +28,9 @@ def nbj(cur):
     print(tree.as_ascii_plot())
     print "cur child: ",childList
     #if (len(childList) > 2 and cur.parent_node != None):
-    if((len(childList)>2 and cur != tree.seed_node )or(len(childList)>3 and cur == tree.seed_node ) ):
-        tree.reroot_at_node(cur, update_bipartitions=False)
+    if((len(childList)>2 and cur.parent_node != None ) or (len(childList)>3 and cur.parent_node == None )):
+
+	tree.reroot_at_node(cur, update_bipartitions=False,suppress_unifurcations=False)
         childList = cur.child_nodes()
         print "to combine these: ", childList
         nd = combine(childList)
@@ -49,6 +52,7 @@ def nbj(cur):
         return
     else:
         return
+
 
 
 
@@ -221,7 +225,7 @@ for i in range(0,totalTaxa):
 
 #tree.reroot_at_node(tree.seed_node, update_bipartitions=False)
 nbj(tree.seed_node)
-
+print "done",len(tree.seed_node.leaf_nodes())
 
 
 #if(len(cur.child_node_nodes())>=3):
