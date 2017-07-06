@@ -20,13 +20,13 @@ def nbj(cur):
     childList = cur.child_nodes()
     print "cur child len", len(cur.child_nodes())
     print "cur child: ", childList
-    print(tree.as_ascii_plot())
+    #print(tree.as_ascii_plot())
 
     if (len(childList) > 2):
 
         parent = cur.parent_node
-        if(parent.parent_node != None ):
-            grandparent = parent.parent_node
+        grandparent = parent.parent_node
+        if(grandparent != None ):
             grandparent.remove_child(parent)
             parent_length = parent.edge_length
 
@@ -43,16 +43,17 @@ def nbj(cur):
         combineList += childList
         subtree = combine(combineList)
 
-        if (parent.parent_node != None):
+        if (grandparent!= None):
             parent.edge_length = parent_length
             grandparent.add_child(parent)
         else:
+            print "WRONG!!!!!"
             tree.seed_node = parent
 
         print "subtree:"
-        print (subtree.as_ascii_plot())
+        #print (subtree.as_ascii_plot())
         print "tree here:"
-        print (tree.as_ascii_plot())
+        #print (tree.as_ascii_plot())
         print tree.as_string(schema='newick')
 
     for child in childList:
@@ -148,8 +149,8 @@ def combine(nodeList):
     laddertree = dendropy.Tree()
     laddertree.seed_node = ch1
     print "ladder tree:"
-    print(laddertree.as_ascii_plot())
-    print (laddertree.as_string(schema='newick'))
+    #print(laddertree.as_ascii_plot())
+    #print (laddertree.as_string(schema='newick'))
 
     print "ladder leaves:",laddertree.update_taxon_namespace()
 
@@ -160,8 +161,8 @@ def combine(nodeList):
     laddertree.is_rooted = True
 
     laddertree.reroot_at_node(subroot, update_bipartitions=True, suppress_unifurcations=False)
-    print(laddertree.as_ascii_plot())
-    print (laddertree.as_string(schema='newick'))
+    #print(laddertree.as_ascii_plot())
+    #print (laddertree.as_string(schema='newick'))
     #ABOVE IS THE BUG
 
     return laddertree
@@ -237,8 +238,8 @@ if __name__ == '__main__':
 
     tree = dendropy.Tree.get(data=tree_str, schema="newick")
     print "Original:"
-    print(tree.as_ascii_plot())
-    print (tree.as_string(schema='newick'))
+    #print(tree.as_ascii_plot())
+    #print (tree.as_string(schema='newick'))
 
     leafList = tree.leaf_nodes()
 
@@ -257,8 +258,8 @@ if __name__ == '__main__':
 
     tree.reroot_at_node(tree.seed_node.leaf_nodes()[0],update_bipartitions=True,suppress_unifurcations=False)
     print "After root at leaf at ", tree.seed_node
-    print(tree.as_ascii_plot())
-    print (tree.as_string(schema='newick'))
+    #print(tree.as_ascii_plot())
+    #print (tree.as_string(schema='newick'))
 
     nbj(tree.seed_node)
 
