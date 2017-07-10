@@ -2,13 +2,14 @@
 import dendropy
 import sys, getopt
 import numpy as np
-import argparse
-from sys import stdin
 
 sys.setrecursionlimit(10000)
 
+
 def nbj(cur):
-    
+    # if (len(tree.leaf_nodes()) != 1000):
+    #    print len(tree.leaf_nodes())
+    #    sys.exit()
     print "nbj:"
     print "current:", cur
 
@@ -46,12 +47,13 @@ def nbj(cur):
             parent.edge_length = parent_length
             grandparent.add_child(parent)
         else:
+            print "WRONG!!!!!"
             tree.seed_node = parent
 
         print "subtree:"
         #print (subtree.as_ascii_plot())
         print "tree here:"
-        print (tree.as_ascii_plot())
+        #print (tree.as_ascii_plot())
         print tree.as_string(schema='newick')
 
     for child in childList:
@@ -167,27 +169,24 @@ def combine(nodeList):
 
 #create distance matrix by using different method, such as picking random leaf, two leaves, and closest node
 #in this program, I picked a random leaf to calculate distance matrix
+
 def create_matrix(nodeList):
     leftList=nodeList[:]
     rightList = nodeList[:]
 
 
-    for index in range(1,len(nodeList)):
+    for index in range(0,len(nodeList)):
         cur = nodeList[index]
         if len(cur.child_nodes())==0:
             leftList[index] = cur
         else:
             leftList[index]=cur.leaf_nodes()[0]
 
-    for index in range(1,len(nodeList)):
+    for index in range(0,len(nodeList)):
         cur = nodeList[index]
         if len(cur.child_nodes())==0:
             rightList[index] = cur
         else:
-            print "cur:",rightList[index]
-
-            print rightList[index].child_nodes()
-            print cur.leaf_nodes()
             rightList[index] = cur.leaf_nodes()[1]
 
 
@@ -198,7 +197,7 @@ def create_matrix(nodeList):
         if i == 0:
             print "here"
             i_left = tree.seed_node
-            i_right = rightList[1] if j != 1 else rightList[2]
+            i_right = rightList[(j+1)%numOfNode+1]
             print i_right
         else:
             i_left = leftList[i]
@@ -206,27 +205,44 @@ def create_matrix(nodeList):
         for j in range(0, numOfNode):
             if j == 0 :
                 j_left = tree.seed_node
-                j_right = rightList[1] if j != 1 else rightList[2]
+                j_right = rightList[(j+1)%numOfNode+1]
             else:
                 j_left = leftList[j]
                 j_right = rightList[j]
-            smallMatrix[i][j] = 0.5*(Matrix[taxa_dictionary[i_left]][taxa_dictionary[j_right]]+ Matrix[taxa_dictionary[i_right]][taxa_dictionary[j_left]]- Matrix[taxa_dictionary[i_left]][taxa_dictionary[i_right]]- Matrix[taxa_dictionary[j_left]][taxa_dictionary[j_right]])
+            smallMatrix[i][j] = 0.5*(Matrix[dict[i_left]][dict[j_right]]+ Matrix[dict[i_right]][dict[j_left]]- Matrix[dict[i_left]][dict[i_right]]- Matrix[dict[j_left]][dict[j_right]])
 
     print smallMatrix
     return smallMatrix
 
-
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-m', '--inputmatrix', required=True, type=argparse.FileType('r'), default=stdin,
-                        help="Input matrix file stream")
-    parser.add_argument('-p', '--inputpolytomy', required=True, type=argparse.FileType('r'), default=stdin,
-                        help="Input polytomy file stream")
-    parser.add_argument('-o', '--output', required=True, type=argparse.FileType('w'), default=stdin,
-                        help="Input matrix file stream")
-    args = parser.parse_args()
+    argv = sys.argv[1:]
+    inputmatrixfile = ''
+    inputpolytomyfile = ''
+    outputfile = ''
+    try:
+        opts, args = getopt.getopt(argv, "h:m:p:o:", ["m=", "p=", "ofile="])
+    except getopt.GetoptError:
+        print 'test.py -m <distancematrix_file> -p <polytomy_file> -o <outputfile>'
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print 'test.py -m <distancematrix_file> -i <polytomy_file> -o <outputfile>'
+            sys.exit()
+        elif opt in ("-m"):
+            inputmatrixfile = arg
+        elif opt in ("-p"):
+            inputpolytomyfile = arg
+        elif opt in ("-o", "--ofile"):
+            outputfile = arg
+    print 'Input distancematrix_file is ', inputmatrixfile
+    print 'Input polytomy_file is ', inputpolytomyfile
+    print 'Output file is ', outputfile
 
-    lines = args.inputmatrix.readlines()
+    inputmatrix = open(inputmatrixfile, "r")
+    inputpolytomy = open(inputpolytomyfile, "r")
+    output = open(outputfile, "w")
+
+    lines = inputmatrix.readlines()
 
     # number of taxa
     num_taxa = int(lines[0])
@@ -244,7 +260,7 @@ if __name__ == '__main__':
         lineNumber = +1
 
     # build the polytomy tree
-    tree_str = args.inputpolytomy.readlines()[0]
+    tree_str = inputpolytomy.readlines()[0]
 
     tree = dendropy.Tree.get(data=tree_str, schema="newick")
     print "Original:"
@@ -266,16 +282,10 @@ if __name__ == '__main__':
     print tree.seed_node.leaf_nodes()[0]
     tree.is_rooted=False
 
-    for leaf in leafList:
-        if (len(leaf.parent_node.child_nodes()) > 1 and leaf.parent_node != tree.seed_node):
-            tree.reroot_at_node(leaf.parent_node, update_bipartitions=True, suppress_unifurcations=True)
-            print "reroot at : ", leaf
-            break
-
     tree.reroot_at_node(tree.seed_node.leaf_nodes()[0],update_bipartitions=True,suppress_unifurcations=False)
     print "After root at leaf at ", tree.seed_node
-    print(tree.as_ascii_plot())
-    print (tree.as_string(schema='newick'))
+    #print(tree.as_ascii_plot())
+    #print (tree.as_string(schema='newick'))
 
     nbj(tree.seed_node)
 
@@ -284,16 +294,13 @@ if __name__ == '__main__':
 
     print "After:"
 
-    # p = tree.seed_node.child_nodes()[0].child_nodes()[1].child_nodes()[1]
-    # print p
-    # tree.reroot_at_node(p, update_bipartitions=True, suppress_unifurcations=False)
-
-
 
     print(tree.as_ascii_plot())
     print (tree.as_string(schema='newick'))
+    print tree.seed_node
     tree.seed_node.child_nodes()[0].parent_node = tree.seed_node
-
+    print tree.seed_node.child_nodes()[0].parent_node
+    print tree.seed_node.child_nodes()[0].edge_length
 
     # p= tree.seed_node.child_nodes()[0].child_nodes()[0]
     # print "After reroot at ",p
@@ -304,12 +311,13 @@ if __name__ == '__main__':
 
 
 
-    args.output.write((tree.as_string(schema='newick'))[5:])
+
+    output.write((tree.as_string(schema='newick'))[5:])
 
 
-    args.inputpolytomy.close()
-    args.inputmatrix.close()
-    args.output.close()
+    inputpolytomy.close()
+    inputmatrix.close()
+    output.close()
 
 
 
