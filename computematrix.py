@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import dendropy
 import numpy as np
 import sys, getopt
