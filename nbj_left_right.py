@@ -51,8 +51,8 @@ def nbj(cur):
         print "subtree:"
         #print (subtree.as_ascii_plot())
         print "tree here:"
-        print (tree.as_ascii_plot())
-        print tree.as_string(schema='newick')
+        #print (tree.as_ascii_plot())
+        #print tree.as_string(schema='newick')
 
     for child in childList:
         nbj(child)
@@ -143,7 +143,6 @@ def combine(nodeList):
     nodeList[0].edge_length = dist_uk[0]
     ch1.add_child(nodeList[0])
 
-    # BELOW IS THE BUG
     laddertree = dendropy.Tree()
     laddertree.seed_node = ch1
     print "ladder tree:"
@@ -161,7 +160,6 @@ def combine(nodeList):
     laddertree.reroot_at_node(subroot, update_bipartitions=True, suppress_unifurcations=False)
     #print(laddertree.as_ascii_plot())
     #print (laddertree.as_string(schema='newick'))
-    #ABOVE IS THE BUG
 
     return laddertree
 
@@ -275,9 +273,9 @@ if __name__ == '__main__':
             break
 
     tree.reroot_at_node(tree.seed_node.leaf_nodes()[0],update_bipartitions=True,suppress_unifurcations=False)
-    print "After root at leaf at ", tree.seed_node
-    print(tree.as_ascii_plot())
-    print (tree.as_string(schema='newick'))
+    #print "After root at leaf at ", tree.seed_node
+    #print(tree.as_ascii_plot())
+    #print (tree.as_string(schema='newick'))
 
     nbj(tree.seed_node)
 
@@ -292,8 +290,8 @@ if __name__ == '__main__':
 
 
 
-    print(tree.as_ascii_plot())
-    print (tree.as_string(schema='newick'))
+    #print(tree.as_ascii_plot())
+    #print (tree.as_string(schema='newick'))
     tree.seed_node.child_nodes()[0].parent_node = tree.seed_node
 
 
