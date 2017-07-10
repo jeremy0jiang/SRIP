@@ -8,7 +8,7 @@ from sys import stdin
 sys.setrecursionlimit(10000)
 
 def nbj(cur):
-    
+
     print "nbj:"
     print "current:", cur
 
@@ -196,9 +196,8 @@ def create_matrix(nodeList):
     i=j=0
     for i in range(0, numOfNode):
         if i == 0:
-            print "here"
             i_left = tree.seed_node
-            i_right = rightList[1] if j != 1 else rightList[2]
+            i_right = rightList[1]
             print i_right
         else:
             i_left = leftList[i]
@@ -206,14 +205,17 @@ def create_matrix(nodeList):
         for j in range(0, numOfNode):
             if j == 0 :
                 j_left = tree.seed_node
-                j_right = rightList[1] if j != 1 else rightList[2]
+                j_right = rightList[1] if i != 1 else rightList[2]
             else:
                 j_left = leftList[j]
                 j_right = rightList[j]
             smallMatrix[i][j] = 0.5*(Matrix[taxa_dictionary[i_left]][taxa_dictionary[j_right]]+ Matrix[taxa_dictionary[i_right]][taxa_dictionary[j_left]]- Matrix[taxa_dictionary[i_left]][taxa_dictionary[i_right]]- Matrix[taxa_dictionary[j_left]][taxa_dictionary[j_right]])
 
+    smallMatrix[0][1]=smallMatrix[1][0]
+
     print smallMatrix
     return smallMatrix
+
 
 
 if __name__ == '__main__':
@@ -223,7 +225,7 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--inputpolytomy', required=True, type=argparse.FileType('r'), default=stdin,
                         help="Input polytomy file stream")
     parser.add_argument('-o', '--output', required=True, type=argparse.FileType('w'), default=stdin,
-                        help="Input matrix file stream")
+                        help="Output file stream")
     args = parser.parse_args()
 
     lines = args.inputmatrix.readlines()
