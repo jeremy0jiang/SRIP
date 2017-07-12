@@ -19,8 +19,8 @@ if __name__ == "__main__":
             inputfile = arg
         elif opt in ("-o", "--ofile"):
             outputfile = arg
-            print('Input file is "', inputfile)
-            print('Output file is "', outputfile)
+#            print('Input file is "', inputfile)
+#            print('Output file is "', outputfile)
 
     input = open(inputfile,"r")
     output = open(outputfile,"w")

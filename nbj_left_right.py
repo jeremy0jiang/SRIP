@@ -189,6 +189,7 @@ def create_matrix(nodeList):
     # create the distance matrix
     smallMatrix = np.empty([numOfNode, numOfNode])
     i = j = 0
+
     for i in range(0, numOfNode):
         if i == 0:
             i_left = tree.seed_node
@@ -251,11 +252,11 @@ if __name__ == '__main__':
 
     # create a node name to matrix dictionary
     taxa_dictionary = dict()  # taxadictionary
+
     for i in range(0, num_taxa):
         for node in leafList:
             if (taxaName[i] == node.taxon.label):
                 taxa_dictionary[node] = i
-
     tree.is_rooted = False
 
     # reroot on an internal node
