@@ -237,7 +237,7 @@ if __name__ == '__main__':
     # create distance matrix from input matrix file
     for lineNumber in range(1, num_taxa + 1):
         line = lines[lineNumber].split()
-        taxaName.append(line[0][0:])
+        taxaName.append(line[0][1:])
         for wordNumber in range(1, num_taxa + 1):
             Matrix[lineNumber - 1][wordNumber - 1] = float(line[wordNumber])
             wordNumber = +1
