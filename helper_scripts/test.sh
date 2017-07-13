@@ -1,5 +1,5 @@
 #!/bin/bash
-for i in {"01","02","03","04"}; do
+for i in "ssqq"$(;seq -w 21 24); do
     echo $i
     printf $i.format"already exists\n"
 done

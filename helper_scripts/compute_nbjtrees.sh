@@ -25,6 +25,6 @@ echo "done"
 
 echo -n "---Neighbor join low support branch..."
 python ../nbj_left_right.py -m "$1.matrix" -p "$2.polytomy" -o "$filename.threshold=$3.nbj.tre"
-
+python ../MP_reroot.py "$filename.threshold=$3.nbj.tre"
 gzip "${filename}.threshold=$3.nbj.tre"
 echo "done"

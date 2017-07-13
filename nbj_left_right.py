@@ -271,6 +271,9 @@ if __name__ == '__main__':
     # apply neighbor joining
     nbj(tree.seed_node)
 
+    # reroot at the child of the root
+    tree.reroot_at_node(tree.seed_node.child_nodes()[0],update_bipartitions=True, suppress_unifurcations=False)
+    
     # output tree in newick format
     args.output.write((tree.as_string(schema='newick'))[5:])
 
