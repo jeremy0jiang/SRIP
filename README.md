@@ -1,5 +1,5 @@
 # SRIP
-My tool Remove low-support branches and use neighbor joining form a ladder-like tree 
+My tools remove low-support branches and use neighbor joining form a ladder-like tree 
 
 ## Usage
 Remove low-support branches and use neighbor joining form a ladder-like tree 
@@ -14,6 +14,7 @@ Remove low-support branches and use neighbor joining form a ladder-like tree
 * **[count_cherries.sh](count_cherries.sh):** Count the number of cherries in a tree
 * **[count_polytomies.py](count_polytomies.py):** Count the number of polytomies in a tree
 * **[format.py](format.py):** Format the sequences that could be run in fastme
+* **[computematrix.py](computematrix.py):** Compute the distance matrix from a tree
 
 
 
