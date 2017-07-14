@@ -1,5 +1,5 @@
 # SRIP
-Write a quick summary about what your tool does here.
+My tool Remove low-support branches and use neighbor joining form a ladder-like tree 
 
 ## Usage
 Remove low-support branches and use neighbor joining form a ladder-like tree 
