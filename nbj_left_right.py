@@ -162,27 +162,66 @@ def combine(nodeList):
 
     return laddertree
 
+
+# find the two closest leaves whose mrca is the node
+def find_two_closest(root):
+    # closest leaves to each child of the root
+    closestList = list()
+
+    # select the cloest leaf to each child
+    for child in root.child_nodes():
+        minDist = [None, float("inf")]
+        find_closest_leaf(child, 0, minDist)
+        closestList.append(minDist[0])
+
+    # select two closest leaves among these leaves
+    numOfChild = len(root.child_nodes())
+    pairwiseMatrix = np.empty([numOfChild, numOfChild])
+    pairwiseMatrix[:] = float("inf")
+    for i in range(0, numOfChild):
+        for j in range(i + 1, numOfChild):
+            pairwiseMatrix[i][j] = Matrix[taxa_dictionary[closestList[i]]][taxa_dictionary[closestList[j]]]
+
+    # select min column and min row
+    minRow, minColumn = np.unravel_index(pairwiseMatrix.argmin(), pairwiseMatrix.shape)
+    leaf_a = closestList[minRow]
+    leaf_b = closestList[minColumn]
+
+    return leaf_a,leaf_b
+
+
+# find the closest leaf to a certain node
+def find_closest_leaf(cur,dist_to_subroot,minDist):
+    # when cur is none
+    if cur == None:
+        return
+    # when cur is leaf
+    if cur.is_leaf():
+        if dist_to_subroot < minDist[1]:
+            minDist[0] = cur
+            minDist[1] = dist_to_subroot
+        return
+    # when cur is a internal node
+    for child in cur.child_nodes():
+        if (dist_to_subroot + child.edge_length < minDist[1]):
+            find_closest_leaf(child, dist_to_subroot + child.edge_length,minDist)
+
+
 # create distance matrix based on a left-side leaf and a right-side leaf on two nodes
 def create_matrix(nodeList):
     # create a left-side leaf list and a right-side leaf lise
     leftList = nodeList[:]
     rightList = nodeList[:]
 
-    # populate the left-side leaf list
+    # populate the left-side and right-side leaf list
     for index in range(1, len(nodeList)):
         cur = nodeList[index]
         if len(cur.child_nodes()) == 0:
             leftList[index] = cur
-        else:
-            leftList[index] = cur.leaf_nodes()[0]
-
-    # populate the right-side leaf list
-    for index in range(1, len(nodeList)):
-        cur = nodeList[index]
-        if len(cur.child_nodes()) == 0:
             rightList[index] = cur
         else:
-            rightList[index] = cur.leaf_nodes()[1]
+            #leftList[index], rightList[index] = cur.child_nodes()[0].leaf_nodes()[0],cur.child_nodes()[1].leaf_nodes()[0]
+            leftList[index], rightList[index] = find_two_closest(cur)
 
     numOfNode = len(nodeList)
 
@@ -211,7 +250,6 @@ def create_matrix(nodeList):
 
     # replace a missing value
     smallMatrix[0][1] = smallMatrix[1][0]
-
     return smallMatrix
 
 # if code is executed (and not imported)
@@ -247,6 +285,8 @@ if __name__ == '__main__':
     tree_str = args.inputpolytomy.readlines()[0]
     tree = dendropy.Tree.get(data=tree_str, schema="newick")
 
+
+
     # create leaf list
     leafList = tree.leaf_nodes()
 
@@ -258,6 +298,7 @@ if __name__ == '__main__':
             if (taxaName[i] == node.taxon.label):
                 taxa_dictionary[node] = i
     tree.is_rooted = False
+
 
     # reroot on an internal node
     for leaf in leafList:
@@ -273,7 +314,10 @@ if __name__ == '__main__':
 
     # reroot at the child of the root
     tree.reroot_at_node(tree.seed_node.child_nodes()[0],update_bipartitions=True, suppress_unifurcations=False)
-    
+
+
+
+
     # output tree in newick format
     args.output.write((tree.as_string(schema='newick'))[5:])
 

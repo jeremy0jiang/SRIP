@@ -5,7 +5,7 @@ filename="${2%.*}"
 echo "---Create distance matrix from sequence..."
 if [ ! -f $1.matrix ] ; then
     python ../format.py -i $1 -o "$filename.format"
-    fastme -i $filename.format --dna=F84 -O "$1.matrix" -g –c
+    fastme -i $filename.format --dna=L -O "$1.matrix" -g –c
     rm $filename.format
     rm $filename.format_fastme_stat.txt
     rm $filename.format_fastme_tree.nwk
