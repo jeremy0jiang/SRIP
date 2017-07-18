@@ -2,7 +2,7 @@
 # USAGE: ./../helper_scripts/runnbj.sh
 # run this in the directory containing all of the tree parameter folders
 #for dir in param*; do
-for dir in param-{"23","24"}* ; do
+for dir in param-{"02","03","04"}* ; do
     echo "=== Working on directory $dir ==="
     for i in $(seq -w 1 20); do
     #for i in {"01","02"} ; do

@@ -15,8 +15,8 @@ BIONJ algorithm:
 Settings for this run:
 
   I                                      Input data type  DNA             
-  E                                   evolutionary model  F84             
-  G                    Gamma rate variation across sites  1.000000        
+  E                                   evolutionary model  LogDet          
+  G                    Gamma rate variation across sites  no              
   R                              Remove sites whith gaps  no              
   O                    Output calculated distance matrix  yes             
 
