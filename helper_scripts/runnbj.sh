@@ -2,7 +2,7 @@
 # USAGE: ./../helper_scripts/runnbj.sh
 # run this in the directory containing all of the tree parameter folders
 #for dir in param*; do
-for dir in param-{"24","23"}* ; do
+for dir in param-{"00","01","02","03","04"}* ; do
     echo "=== Working on directory $dir ==="
     for i in $(seq -w 1 20); do
     #for i in {"01","02"} ; do
@@ -17,7 +17,7 @@ for dir in param-{"24","23"}* ; do
         gunzip "${raxmltree}.gz"
 
         echo "Working on FastTree tree $i..."
-        for t_fasttree in {0.8,0.9}; do
+        for t_fasttree in {80,90}; do
             ./../helper_scripts/compute_nbjtrees.sh $sequence $fasttreetree $t_fasttree
             echo "done"
         done
