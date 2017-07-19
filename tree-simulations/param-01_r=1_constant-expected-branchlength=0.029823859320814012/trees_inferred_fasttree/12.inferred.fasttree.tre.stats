@@ -10,3 +10,7 @@ Tree Error MS: 1449.0000
 Tree Error QT: 1962399283.0000
 Average Pendant Branch Length: 0.0308991
 Average Internal Branch Length: 0.0296158
+Tree Error RF for threshold 80 : .15930000000000000000
+Number of Cherries for threshold 80 : 347
+Tree Error RF for threshold 90 : .20690000000000000000
+Number of Cherries for threshold 90 : 353

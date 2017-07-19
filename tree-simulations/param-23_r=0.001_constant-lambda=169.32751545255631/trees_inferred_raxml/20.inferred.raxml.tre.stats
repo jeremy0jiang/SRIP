@@ -6,3 +6,7 @@ Cherry Deviation as Difference (inferred - true): 178
 Cherry Deviation as Ratio (inferred / true): 6.56250000000000000000
 Average Pendant Branch Length: 0.154206
 Average Internal Branch Length: 0.0136437
+Tree Error for threshold 80 : .63810000000000000000
+Number of Cherries for threshold 80 : 222
+Tree Error for threshold 90 : .76240000000000000000
+Number of Cherries for threshold 90 : 149
