@@ -10,3 +10,7 @@ Tree Error for threshold 80 : .77140000000000000000
 Number of Cherries for threshold 80 : 208
 Tree Error for threshold 90 : .80250000000000000000
 Number of Cherries for threshold 90 : 94
+Tree Error RF based on truetree distance for threshold 80: .51125000000000000000
+Number of Cherries for threshold 80: 187
+Tree Error RF based on truetree distance for threshold 90: .24670000000000000000
+Number of Cherries for threshold 90: 74
