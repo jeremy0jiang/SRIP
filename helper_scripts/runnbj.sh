@@ -2,10 +2,10 @@
 # USAGE: ./../helper_scripts/runnbj.sh
 # run this in the directory containing all of the tree parameter folders
 #for dir in param*; do
-for dir in param-24* ; do
+for dir in param-00* ; do
     echo "=== Working on directory $dir ==="
-    for i in $(seq -w 1 20); do
-    #for i in {"01","02"} ; do
+    #for i in $(seq -w 1 20); do
+    for i in {"01","02"} ; do
         # fasttree inferred tree
         sequence=$dir/indelible/$i.fas
         fasttreetree=$dir/trees_inferred_fasttree/$i.inferred.fasttree.support.tre
@@ -25,7 +25,6 @@ for dir in param-24* ; do
         echo "Working on RaxmlTree tree $i..."
         for t_raxml in {80,90}; do
             ./../helper_scripts/compute_nbjtrees.sh $sequence $raxmltree  $t_raxml
-
             echo "done"
         done
 
@@ -36,7 +35,7 @@ for dir in param-24* ; do
 
 
         rm  "$fasttreetree.polytomy"
-	rm  "$raxmltree.polytomy"
+        rm  "$raxmltree.polytomy"
         echo "done"
     rm  "${sequence}.matrix"
     done

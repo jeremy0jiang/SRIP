@@ -9,7 +9,7 @@ inf = 0.0
 numbers = ["00","01","02","03","04"]
 for n in numbers:
     values = [0.0, 0.0, 0.0, 0.0]
-    for f in glob.iglob('../tree-simulations/param-'+n+'*/trees_inferred_raxml/*inferred.raxml.tre.stats'):
+    for f in glob.iglob('../tree-simulations/param-'+n+'*/trees_inferred_fasttree/*inferred.fasttree.tre.stats'):
     	with open(f) as fh:
             for idx, row in enumerate(fh.readlines()[-4:]):
                 values[idx] += float(row.strip().split(' ')[-1])
