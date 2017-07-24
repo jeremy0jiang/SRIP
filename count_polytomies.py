@@ -9,6 +9,7 @@ This program counts the number of polytomies in the tree
 import dendropy
 import sys, getopt
 
+sys.setrecursionlimit(10000)
 
 def count(cur):
     sum = 0

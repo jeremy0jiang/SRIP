@@ -38,7 +38,9 @@ def nbj(cur):
         combineList = list()
         combineList.append(parent)
         combineList += childList
+        print len(combineList)
         subtree = combine(combineList)
+        subtree.print_plot()
 
         if (grandparent != None):
             parent.edge_length = parent_length
@@ -54,6 +56,7 @@ def nbj(cur):
 
 # given a nodelist, use neighbor joining to combine these nodes
 def combine(nodeList):
+    print "hi"
     # the parent node of cur
     subroot = nodeList[0]
 
@@ -61,6 +64,7 @@ def combine(nodeList):
 
     # get distance matrix from creat_matrix method
     smallMatrix = create_matrix(nodeList)
+    print smallMatrix
 
     # create Q-matrix
     QMatrix = np.empty([numOfNode, numOfNode])
@@ -126,7 +130,7 @@ def combine(nodeList):
         closestNode.edge_length = dist_au
         ch2.add_child(ch1)
         ch2.add_child(closestNode)
-
+        print "closest: ",closestNode,dist_au
         # distance from other nodes to the center
         dist_ab = dist_uk[closestTaxa]
         for taxa in range(0, numOfNode):
@@ -144,14 +148,21 @@ def combine(nodeList):
         # set old center to the new center
         ch1 = ch2
 
+    print "before reroot : -----------"
+    print ch1.child_nodes()
     # join the left node from node list
     nodeList[0].edge_length = dist_uk[0]
     ch1.add_child(nodeList[0])
+    print nodeList[0]
+    print dist_uk[0]
 
     # create a ladderlike tree
     laddertree = dendropy.Tree()
     laddertree.seed_node = ch1
 
+    print "subroot child: ",ch1.child_nodes()
+    print laddertree.as_ascii_plot()
+    print laddertree.as_string(schema='newick')
     # update taxon
     laddertree.update_taxon_namespace()
     laddertree.is_rooted = True
@@ -159,6 +170,9 @@ def combine(nodeList):
 
     # reroot on the parent node to stick the ladderlike tree to the original tree
     laddertree.reroot_at_node(subroot, update_bipartitions=True, suppress_unifurcations=False)
+    print "ladder: ----------"
+    print laddertree.as_ascii_plot()
+    print laddertree.as_string(schema='newick')
 
     return laddertree
 
@@ -213,7 +227,19 @@ def create_matrix(nodeList):
     leftList = nodeList[:]
     rightList = nodeList[:]
 
+
     # populate the left-side and right-side leaf list
+
+    leftList[0] = tree.seed_node
+    if nodeList[0] == tree.seed_node:
+        leftList[0] = tree.seed_node
+    else:
+        print nodeList[0].child_nodes()
+        rightList[0] = nodeList[0].leaf_nodes()[0]
+
+
+
+
     for index in range(1, len(nodeList)):
         cur = nodeList[index]
         if len(cur.child_nodes()) == 0:
@@ -230,26 +256,36 @@ def create_matrix(nodeList):
     i = j = 0
 
     for i in range(0, numOfNode):
-        if i == 0:
-            i_left = tree.seed_node
-            i_right = rightList[1]
-        else:
-            i_left = leftList[i]
-            i_right = rightList[i]
+        # if i == 0:
+        #     i_left = tree.seed_node
+        #     i_right = rightList[1]
+        # else:
+        i_left = leftList[i]
+        i_right = rightList[i]
         for j in range(0, numOfNode):
-            if j == 0:
-                j_left = tree.seed_node
-                j_right = rightList[1] if i != 1 else rightList[2]
-            else:
-                j_left = leftList[j]
-                j_right = rightList[j]
+            # if j == 0:
+            #     j_left = tree.seed_node
+            #     j_right = rightList[1] if i != 1 else rightList[2]
+            # else:
+            j_left = leftList[j]
+            j_right = rightList[j]
+            if(i==0):
+                print "----------"
+                print nodeList[i],nodeList[j]
+                print i_left
+                print i_right
+                print j_left
+                print j_right
+                print "----------"
             smallMatrix[i][j] = 0.5 * (
             Matrix[taxa_dictionary[i_left]][taxa_dictionary[j_right]] + Matrix[taxa_dictionary[i_right]][
                 taxa_dictionary[j_left]] - Matrix[taxa_dictionary[i_left]][taxa_dictionary[i_right]] -
             Matrix[taxa_dictionary[j_left]][taxa_dictionary[j_right]])
 
+
     # replace a missing value
     smallMatrix[0][1] = smallMatrix[1][0]
+    print nodeList
     return smallMatrix
 
 # if code is executed (and not imported)
@@ -310,15 +346,20 @@ if __name__ == '__main__':
             break
 
     # reroot on a random leaf
-    tree.reroot_at_node(tree.seed_node.leaf_nodes()[0], update_bipartitions=True, suppress_unifurcations=False)
+    tree.reroot_at_node(tree.seed_node.leaf_nodes()[5], update_bipartitions=True, suppress_unifurcations=False)
 
+    print "tree root: ",tree.seed_node
+    tree.print_plot()
     # apply neighbor joining
     nbj(tree.seed_node)
 
+    print tree.seed_node
     # reroot at the child of the root
     tree.reroot_at_node(tree.seed_node.child_nodes()[0],update_bipartitions=True, suppress_unifurcations=False)
 
-
+    print tree.seed_node
+    tree.print_plot()
+    print len(tree.seed_node.child_nodes())
 
 
     # output tree in newick format

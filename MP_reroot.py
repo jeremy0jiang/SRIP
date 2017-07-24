@@ -5,7 +5,8 @@
 from Tree_extend import MPR_Tree
 from sys import argv
 from os.path import splitext
-
+import sys
+sys.setrecursionlimit(10000)
 tree_file = argv[1]
 base_name,ext = splitext(tree_file)
 
