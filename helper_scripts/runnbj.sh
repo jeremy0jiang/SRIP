@@ -1,11 +1,11 @@
 #!/bin/bash
 # USAGE: ./../helper_scripts/runnbj.sh
 # run this in the directory containing all of the tree parameter folders
-#for dir in param*; do
-for dir in param-00* ; do
+for dir in param-00*; do
+#for dir in param-{"02","03","04"}* ; do
     echo "=== Working on directory $dir ==="
     #for i in $(seq -w 1 20); do
-    for i in {"01","02"} ; do
+    for i in 01; do
         # fasttree inferred tree
         sequence=$dir/indelible/$i.fas
         fasttreetree=$dir/trees_inferred_fasttree/$i.inferred.fasttree.support.tre

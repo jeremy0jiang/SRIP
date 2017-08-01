@@ -21,6 +21,7 @@ def count(cur):
         sum = sum + count(child)
 
     if (len(cur.child_nodes()) > 2):
+        #print cur.label
         return sum+1
     else:
         return sum

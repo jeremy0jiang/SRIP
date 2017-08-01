@@ -1,0 +1,5 @@
+FastTree tree 13 stats
+Tree Error RF for threshold 80: .16630000000000000000
+Number of Cherries for threshold 80: 321
+Tree Error RF for threshold 90: .18440000000000000000
+Number of Cherries for threshold 90: 322

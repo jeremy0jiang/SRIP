@@ -1,0 +1,5 @@
+RaxmlTree tree 10 stats
+Tree Error RF based on truetree distance for threshold 80: .04910000000000000000
+99
+Tree Error RF based on truetree distance for threshold 90: .02910000000000000000
+94

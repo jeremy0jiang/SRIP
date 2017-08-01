@@ -5,7 +5,7 @@ filename="${2%.*}"
 echo "---Create distance matrix from sequence..."
 if [ ! -f $1.matrix ] ; then
     python ../format.py -i $1 -o "$filename.format"
-    fastme -i $filename.format --dna=L -O "$1.matrix" -g –c
+    fastme -i $filename.format -O "$1.matrix" --dna=F84 -g=5.256 –c
     rm $filename.format
     rm $filename.format_fastme_stat.txt
     rm $filename.format_fastme_tree.nwk
@@ -24,7 +24,7 @@ echo "done"
 
 
 echo -n "---Neighbor join low support branch..."
-python ../nbj_left_right.py -m "$1.matrix" -p "$2.polytomy" -o "$filename.threshold=$3.nbj.tre"
-python ../MP_reroot.py "$filename.threshold=$3.nbj.tre"
-gzip "${filename}.threshold=$3.nbj.tre"
+python ../nbj_left_right.py -m "$1.matrix" -p "$2.polytomy" -o "$filename.threshold=$3.nbj.tre.gamma"
+python ../MP_reroot.py "$filename.threshold=$3.nbj.tre.gamma"
+#gzip "${filename}.threshold=$3.nbj.tre.gamma"
 echo "done"

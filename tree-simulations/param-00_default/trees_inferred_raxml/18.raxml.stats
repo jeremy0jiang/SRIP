@@ -1,0 +1,5 @@
+RaxmlTree tree 18 stats
+Tree Error RF for threshold 80: .48550000000000000000
+Number of Cherries for threshold 80: 177
+Tree Error RF for threshold 90: .47090000000000000000
+Number of Cherries for threshold 90: 153

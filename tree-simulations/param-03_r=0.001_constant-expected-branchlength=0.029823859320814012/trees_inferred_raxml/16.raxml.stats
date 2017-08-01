@@ -1,0 +1,5 @@
+RaxmlTree tree 16 stats
+Tree Error RF for threshold 80: .71275000000000000000
+Number of Cherries for threshold 80: 173
+Tree Error RF for threshold 90: .73135000000000000000
+Number of Cherries for threshold 90: 89

@@ -1,0 +1,5 @@
+FastTree tree 10 stats
+Tree Error RF based on truetree distance for threshold 80: .06615000000000000000
+103
+Tree Error RF based on truetree distance for threshold 90: .03110000000000000000
+94
