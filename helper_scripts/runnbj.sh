@@ -5,7 +5,7 @@ for dir in param-04*; do
 #for dir in param-{"02","03","04"}* ; do
     echo "=== Working on directory $dir ==="
     #for i in $(seq -w 1 20); do
-    for i in 01; do
+    for i in 03; do
         # fasttree inferred tree
         sequence=$dir/indelible/$i.fas
         fasttreetree=$dir/trees_inferred_fasttree/$i.inferred.fasttree.support.tre
