@@ -12,8 +12,8 @@ FastME 2.0 - A comprehensive, accurate and fast distance-based phylogeny inferen
 Settings for this run:
 
   I                                      Input data type  DNA             
-  E                                   evolutionary model  F84             
-  G                    Gamma rate variation across sites  1.000000        
+  E                                   evolutionary model  TN93            
+  G                    Gamma rate variation across sites  5.256000        
   R                              Remove sites whith gaps  no              
   O                    Output calculated distance matrix  yes             
 
