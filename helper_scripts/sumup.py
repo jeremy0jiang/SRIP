@@ -3,15 +3,15 @@
 
 import glob
 
-type='fasttree'
-values = [0.0, 0.0, 0.0, 0.0]
+type='raxml'
+values = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 inf = 0.0
 numbers = ["00","01","02","03","04"]
 for n in numbers:
-    values = [0.0, 0.0, 0.0, 0.0]
-    for f in glob.iglob('../tree-simulations/param-'+n+'*/trees_inferred_'+type+'/*truetree.'+type+'.stats'):
+    values = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    for f in glob.iglob('../tree-simulations/param-'+n+'*/trees_inferred_'+type+'/*inf.'+type+'.stats'):
     	with open(f) as fh:
-            for idx, row in enumerate(fh.readlines()[-4:]):
+            for idx, row in enumerate(fh.readlines()[-6:]):
                 values[idx] += float(row.strip().split(' ')[-1])
     
     values = [x/20 for x in values]    
