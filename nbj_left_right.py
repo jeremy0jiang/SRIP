@@ -280,10 +280,10 @@ if __name__ == '__main__':
         line = lines[lineNumber].split()
         taxaName.append(line[0][1:])
         for wordNumber in range(1, num_taxa + 1):
-            if line[wordNumber] == "NA":
-                Matrix[lineNumber - 1][wordNumber - 1] = 5.0
-            else:
-                Matrix[lineNumber - 1][wordNumber - 1] = float(line[wordNumber])
+#            if line[wordNumber] == "NA":
+#                Matrix[lineNumber - 1][wordNumber - 1] = 5.0
+#            else:
+            Matrix[lineNumber - 1][wordNumber - 1] = float(line[wordNumber])
             wordNumber = +1
         lineNumber = +1
 

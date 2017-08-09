@@ -1,0 +1,7 @@
+RaxmlTree tree 10 stats
+Tree Error RF based on inferred raxml distance for threshold 50: .85865000000000000000
+248
+Tree Error RF based on inferred raxml distance for threshold 80: .85965000000000000000
+178
+Tree Error RF based on inferred raxml distance for threshold 90: .82960000000000000000
+46

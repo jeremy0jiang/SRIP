@@ -1,0 +1,7 @@
+FastTree tree 03 stats
+Tree Error RF based on inferred fasttree distance for threshold 50: .69140000000000000000
+257
+Tree Error RF based on inferred fasttree distance for threshold 80: .69690000000000000000
+207
+Tree Error RF based on inferred fasttree distance for threshold 90: .67280000000000000000
+96
