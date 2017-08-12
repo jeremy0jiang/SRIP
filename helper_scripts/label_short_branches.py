@@ -19,7 +19,7 @@ def traverse(node,t):
     else:
         l = abs(node.edge_length)
 
-    if l > t:
+    if l >= t:
         node.label = 100
     else:
         node.label = 1

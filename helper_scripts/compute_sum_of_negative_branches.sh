@@ -1,8 +1,8 @@
 #!/bin/bash
 # USAGE: ./../helper_scripts/runnbj.sh
 # run this in the directory containing all of the tree parameter folders
-type="fasttree"
-#type="raxml"
+#type="fasttree"
+type="raxml"
 for t in {"1","2","3"}; do
 #for t in {"70","75","80","85","90","95"}; do
     #echo $t
