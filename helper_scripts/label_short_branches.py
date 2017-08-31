@@ -2,7 +2,7 @@
 #Usage:./label_short_branches -i <inputree> -t <threshold>
 import dendropy
 import sys, getopt
-import numpy as np
+#import numpy as np
 import argparse
 from sys import stdin
 import math
@@ -15,14 +15,14 @@ def traverse(node,t):
     for nd in node.child_nodes():
         traverse(nd,t)
     if (node.edge_length == None):
-        l = 0
+        l = 1000
     else:
-        l = abs(node.edge_length)
-
+        l = node.edge_length
     if l >= t:
         node.label = 100
     else:
         node.label = 1
+#print node.edge_length, node.label
 
 
 if __name__ == '__main__':
